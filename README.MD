@@ -1,2 +1,3 @@
-# W_SpotDetection3D-IJ
-This workflow detects spots in a 3D image by filtering the image by Laplacian of Gaussian (user defined radius) and detecting local intensity minima in 3x3x3 regions below a minimum intensity value (user defined threshold).
+# W_SpotDetection3D-BigFISH
+
+This workflow detects spots in a 3D image by using the fishquant2/BigFISH software. BigFISH applies a LoG-filter and detects the maxima above a threshold. BigFISH can auto-detect the threshold value and remove detections that are likely to be double detections of the same spot.
