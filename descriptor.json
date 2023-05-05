@@ -1,12 +1,12 @@
 {
-    "name": "SpotDetection3D-IJ",
+    "name": "SpotDetection3D-BigFISH",
     "container-image": {
-        "image": "neubiaswg5/w_spotdetection3d-ij",
+        "image": "volkerbaecker/w_spotdetection3d-bigfish",
         "type": "singularity"
     },
     "schema-version": "cytomine-0.1",
-    "description": "3D spot detection using a LoG filter and the detection of minima.",
-    "command-line": "python wrapper.py CYTOMINE_HOST CYTOMINE_PUBLIC_KEY CYTOMINE_PRIVATE_KEY CYTOMINE_ID_PROJECT CYTOMINE_ID_SOFTWARE IJ_RADIUS IJ_THRESHOLD",
+    "description": "3D spot detection using the BigFISH software.",
+    "command-line": "python wrapper.py CYTOMINE_HOST CYTOMINE_PUBLIC_KEY CYTOMINE_PRIVATE_KEY CYTOMINE_ID_PROJECT CYTOMINE_ID_SOFTWARE RADIUS_XY RADIUS_Z THRESHOLD DETECT_THRESHOLD REMOVE_DUPLICATES",
     "inputs": [
         {
             "id": "cytomine_host",
@@ -59,24 +59,56 @@
             "set-by-server": true
         },
         {
-            "id": "ij_radius",
+            "id": "radius_xy",
             "value-key": "@ID",
             "command-line-flag": "--@id",
-            "name": "Radius",
-            "description": "Radius for Gaussian smoothing",
+            "name": "Radius xy",
+            "description": "Radius of the spots in xy",
             "type": "Number",
-            "default-value": 2.5,
+            "default-value": 3,
+            "optional": true
+        },
+         {
+            "id": "radius_z",
+            "value-key": "@ID",
+            "command-line-flag": "--@id",
+            "name": "Radius z",
+            "description": "Radius of the spots in z",
+            "type": "Number",
+            "default-value": 6,
             "optional": true
         },
         {
-            "id": "ij_threshold",
+            "id": "threshold",
             "value-key": "@ID",
             "command-line-flag": "--@id",
             "name": "Threshold",
-            "description": "Threshold",
+            "description": "Threshold for the maxima after the LoG-filter",
             "type": "Number",
-            "default-value": -2,
+            "default-value": 1.31313131,
             "optional": true
+        },
+        {
+            "id": "detect_threshold",
+            "value-key": "@ID",
+            "command-line-flag": "--@id",
+            "name": "Detect Threshold",
+            "description": "Auto-detect the threshold value",
+            "set-by-server": false,
+            "type": "Boolean",
+            "default-value": false,
+            "optional": false
+        },
+        {
+            "id": "remove_duplicates",
+            "value-key": "@ID",
+            "command-line-flag": "--@id",
+            "name": "Remove Duplicates",
+            "description": "Remove duplicate detections of spots",
+            "set-by-server": false,
+            "type": "Boolean",
+            "default-value": false,
+            "optional": false
         }
     ]
 }
