@@ -19,14 +19,20 @@ def main(argv):
 
         # 3. Call the image analysis workflow using the run script
         nj.job.update(progress=25, statusComment="Launching workflow...")
-        command = "/usr/bin/xvfb-run java -Xmx6000m -cp /fiji/jars/ij.jar ij.ImageJ --headless --console " \
-                  "-macro macro.ijm \"input={}, output={}, ij_radius={}, ij_threshold={}\"".format(in_path, out_path, nj.parameters.ij_radius, nj.parameters.ij_threshold)
-        return_code = call(command, shell=True, cwd="/fiji")  # waits for the subprocess to return
-
-        if return_code != 0:
-            err_desc = "Failed to execute the ImageJ macro (return code: {})".format(return_code)
-            nj.job.update(progress=50, statusComment=err_desc)
-            raise ValueError(err_desc)
+        command = "python script.py --in_dir {} --out_dir {} \
+                   --radius_xy {} --radius_z {} --threshold {}".format(in_path, out_path, 
+                                                                nj.parameters.radius_xy,
+                                                                nj.parameters.radius_z,
+                                                                nj.parameters.threshold)
+        if nj.parameters.detect_threshold:
+        	command = command + "--detect_threshold"
+        if nj.parameters.remove_duplicates:
+        	command = command + "--remove_duplicates"        	
+        # Command to test the workflow before it is added to biaflows, which does 
+        #   not accept the desciptor.json parameters 
+        # command = "python script.py --infld {} --outfld {}".format(in_path, out_path)
+        print(command)
+        return_code = call(command, shell=True, cwd="/app")  # waits for the subprocess to return
 
         # 4. Upload the annotation and labels to Cytomine
         upload_data(problem_cls, nj, in_images, out_path, **nj.flags, is_2d=is_2d, monitor_params={

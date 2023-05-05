@@ -1,10 +1,5 @@
-FROM python:3.6.9-stretch
+FROM python:3.9.16-bullseye
 
-RUN apt-get update && apt-get install libgeos-dev -y && apt-get clean
-
-# ---------------------------------------------------------------------------------------------------------------------
-# Install Java
-RUN apt-get update && apt-get install openjdk-8-jdk -y && apt-get clean
 
 # ---------------------------------------------------------------------------------------------------------------------
 # Install Cytomine python client
@@ -13,24 +8,10 @@ RUN git clone https://github.com/cytomine-uliege/Cytomine-python-client.git && \
     rm -r /Cytomine-python-client
 
 # ---------------------------------------------------------------------------------------------------------------------
-# Fiji installation
-# Install virtual X server
-RUN apt-get update && apt-get install -y unzip xvfb libx11-dev libxtst-dev libxrender-dev
+# BigFISH installation
+# 
 
-# Install Fiji.
-RUN wget https://downloads.imagej.net/fiji/Life-Line/fiji-linux64-20170530.zip
-RUN unzip fiji-linux64-20170530.zip
-RUN mv Fiji.app/ fiji
-
-# create a sym-link with the name jars/ij.jar that is pointing to the current version jars/ij-1.nm.jar
-RUN cd /fiji/jars && ln -s $(ls ij-1.*.jar) ij.jar
-
-# Add fiji to the PATH
-ENV PATH $PATH:/fiji
-RUN mkdir -p /fiji/data
-
-# Clean up
-RUN rm fiji-linux64-20170530.zip
+RUN pip install bigfish
 
 # ---------------------------------------------------------------------------------------------------------------------
 # Install Neubias-W5-Utilities (annotation exporter, compute metrics, helpers,...)
@@ -45,13 +26,8 @@ RUN cp /neubiaswg5-utilities/bin/* /usr/bin/
 RUN rm -r /neubiaswg5-utilities
 
 # ---------------------------------------------------------------------------------------------------------------------
-# Install Fiji plugins
-RUN cd /fiji/plugins && wget -O imagescience.jar https://imagescience.org/meijering/software/download/imagescience.jar
-RUN cd /fiji/plugins && wget -O FeatureJ_.jar https://imagescience.org/meijering/software/download/FeatureJ_.jar
-
-# ---------------------------------------------------------------------------------------------------------------------
-# Install Macro
-ADD IJSpotDetection3D.ijm /fiji/macros/macro.ijm
+# Add script
+ADD detect_spots.py /app/script.py
 ADD wrapper.py /app/wrapper.py
 
 # for running the wrapper locally
