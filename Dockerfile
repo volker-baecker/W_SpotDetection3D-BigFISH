@@ -14,16 +14,16 @@ RUN git clone https://github.com/cytomine-uliege/Cytomine-python-client.git && \
 RUN pip install big-fish==0.6.2
 
 # ---------------------------------------------------------------------------------------------------------------------
-# Install Neubias-W5-Utilities (annotation exporter, compute metrics, helpers,...)
-RUN git clone https://github.com/Neubias-WG5/neubiaswg5-utilities.git
-RUN cd /neubiaswg5-utilities/ && git checkout tags/v0.8.8 && pip install .
+# Install Biaflows-Utilities (annotation exporter, compute metrics, helpers,...)
+RUN git clone https://github.com/Neubias-WG5/biaflows-utilities.git && \
+    cd /biaflows-utilities/ && git checkout tags/v0.9.3 && pip install .
 
 # install utilities binaries
-RUN chmod +x /neubiaswg5-utilities/bin/*
-RUN cp /neubiaswg5-utilities/bin/* /usr/bin/
+RUN chmod +x /biaflows-utilities/bin/*
+RUN cp /biaflows-utilities/bin/* /usr/bin/
 
 # cleaning
-RUN rm -r /neubiaswg5-utilities
+RUN rm -r /biaflows-utilities
 
 # ---------------------------------------------------------------------------------------------------------------------
 # Add script
