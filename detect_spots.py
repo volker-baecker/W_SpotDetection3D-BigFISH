@@ -57,9 +57,9 @@ def getArguments():
     parser.add_argument('--in_dir', help='input folder', required=True)
     parser.add_argument('--out_dir', help='output folder', required=True)
 
-    parser.add_argument('--radius_xy', help='the spot radius in the xy-plane', default=RADIUS_XY)
-    parser.add_argument('--radius_z', help='the spot radius in the z-dimension', default=RADIUS_XY)
-    parser.add_argument('--threshold', help='the threshold for the maxima in the LoG result', default=THRESHOLD)
+    parser.add_argument('--radius_xy', type=float, help='the spot radius in the xy-plane', default=RADIUS_XY)
+    parser.add_argument('--radius_z', type=float, help='the spot radius in the z-dimension', default=RADIUS_XY)
+    parser.add_argument('--threshold', type=float, help='the threshold for the maxima in the LoG result', default=THRESHOLD)
     parser.add_argument('--detect_threshold',
                     help='find the threshold value automatically',
                     action='store_true')

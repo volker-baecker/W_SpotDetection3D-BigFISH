@@ -3,8 +3,8 @@ FROM python:3.6.9-stretch
 # ---------------------------------------------------------------------------------------------------------------------
 # BigFISH installation
 # 
-RUN python3 -m venv /opt/bigfish_env
-RUN /opt/venv/bin/activate && pip install big-fish==0.6.2
+RUN python3 -m venv /bigfish_env
+RUN . /bigfish_env/bin/activate && pip install big-fish==0.6.2
 
 
 # ---------------------------------------------------------------------------------------------------------------------

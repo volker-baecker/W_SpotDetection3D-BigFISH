@@ -19,7 +19,7 @@ def main(argv):
 
         # 3. Call the image analysis workflow using the run script
         nj.job.update(progress=25, statusComment="Launching workflow...")
-        command = "/opt/venv/bin/activate && python script.py --in_dir {} --out_dir {} \
+        command = ". /bigfish_env/bin/activate && python script.py --in_dir {} --out_dir {} \
                    --radius_xy {} --radius_z {} --threshold {}".format(in_path, out_path, 
                                                                 nj.parameters.radius_xy,
                                                                 nj.parameters.radius_z,
