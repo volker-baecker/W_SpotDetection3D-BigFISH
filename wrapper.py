@@ -19,15 +19,15 @@ def main(argv):
 
         # 3. Call the image analysis workflow using the run script
         nj.job.update(progress=25, statusComment="Launching workflow...")
-        command = "python script.py --in_dir {} --out_dir {} \
+        command = "/opt/venv/bin/activate && python script.py --in_dir {} --out_dir {} \
                    --radius_xy {} --radius_z {} --threshold {}".format(in_path, out_path, 
                                                                 nj.parameters.radius_xy,
                                                                 nj.parameters.radius_z,
                                                                 nj.parameters.threshold)
         if nj.parameters.detect_threshold:
-        	command = command + "--detect_threshold"
+        	command = command + " --detect_threshold"
         if nj.parameters.remove_duplicates:
-        	command = command + "--remove_duplicates"        	
+        	command = command + " --remove_duplicates"        	
         # Command to test the workflow before it is added to biaflows, which does 
         #   not accept the desciptor.json parameters 
         # command = "python script.py --infld {} --outfld {}".format(in_path, out_path)
